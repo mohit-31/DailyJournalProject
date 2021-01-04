@@ -75,12 +75,22 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
-
-    Account.findOrCreate({ googleId: profile.id }, function (err, account) {
-      return cb(err, account);
-    });
-  }
+        //install and require find or create to make following function work
+        Account.findOrCreate({
+            googleId: profile.id,
+            username: profile.emails[0].value
+        }, (err, user) => {
+            return cb(err, user);
+        });
+    }
 ));
+    ///console.log(profile);
+
+    //Account.findOrCreate({ googleId: profile.id }, function (err, account) {
+      //return cb(err, account);
+  //  });
+  //}
+//));
 
 
 
